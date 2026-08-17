@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Candidate Portal - Akshaya Educational Foundation</title>
+	
+	<!-- Fonts & Icons -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+	<style>
+		* { box-sizing: border-box; margin: 0; padding: 0; }
+		body {
+			font-family: 'Montserrat', sans-serif;
+			background-color: #f4f7fb;
+			color: #333333;
+		}
+		header {
+			background: #ffffff;
+			box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+			padding: 12px 20px;
+			position: sticky;
+			top: 0;
+			z-index: 100;
+		}
+		.nav-container {
+			max-width: 1200px;
+			margin: 0 auto;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+		.portal-back-btn {
+			font-size: 13px;
+			font-weight: 700;
+			color: #1e73be;
+			text-decoration: none;
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+		}
+		.portal-back-btn:hover { text-decoration: underline; }
+
+		/* Portal Main Wrapper */
+		.portal-wrapper {
+			max-width: 1100px;
+			margin: 40px auto;
+			padding: 0 20px;
+		}
+		.portal-card-main {
+			background: #ffffff;
+			border-radius: 8px;
+			border: 1px solid #e2e8f0;
+			box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+			padding: 30px;
+		}
+		.portal-title-strip {
+			border-bottom: 2px solid #f1f5f9;
+			padding-bottom: 15px;
+			margin-bottom: 25px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			flex-wrap: wrap;
+			gap: 10px;
+		}
+		.portal-title-strip h2 {
+			font-size: 22px;
+			color: #1e3c72;
+			display: flex;
+			align-items: center;
+			gap: 10px;
+		}
+
+		/* Login Gate */
+		.student-auth-gate {
+			background: #f8fafc;
+			border: 1px solid #e2e8f0;
+			border-radius: 8px;
+			padding: 35px 25px;
+			max-width: 440px;
+			margin: 20px auto;
+			text-align: center;
+		}
+		.student-auth-gate h4 {
+			font-size: 18px;
+			color: #1e3c72;
+			margin-bottom: 6px;
+		}
+		.student-auth-gate p {
+			font-size: 12.5px;
+			color: #64748b;
+			margin-bottom: 20px;
+		}
+		.auth-input-group {
+			margin-bottom: 14px;
+			text-align: left;
+		}
+		.auth-input-group label {
+			display: block;
+			font-size: 12px;
+			font-weight: 700;
+			color: #334155;
+			margin-bottom: 5px;
+		}
+		.auth-input-group input {
+			width: 100%;
+			padding: 10px 14px;
+			border-radius: 5px;
+			border: 1px solid #cbd5e1;
+			font-size: 13px;
+			font-family: 'Montserrat', sans-serif;
+			outline: none;
+		}
+		.auth-login-btn {
+			width: 100%;
+			padding: 11px;
+			background: #ba0417;
+			color: #ffffff;
+			border: none;
+			border-radius: 5px;
+			font-weight: 700;
+			font-size: 13px;
+			cursor: pointer;
+			transition: background 0.2s;
+		}
+		.auth-login-btn:hover { background: #960312; }
+		.auth-error-msg {
+			display: none;
+			color: #dc2626;
+			font-size: 12px;
+			font-weight: 600;
+			margin-top: 12px;
+		}
+		.auth-hint-box {
+			margin-top: 18px;
+			background: #ffffff;
+			border: 1px dashed #cbd5e1;
+			border-radius: 6px;
+			padding: 10px;
+			font-size: 11.5px;
+			color: #475569;
+			text-align: left;
+			line-height: 1.5;
+		}
+
+		/* Logged-in Header */
+		.student-logged-in-bar {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			background: #f1f5f9;
+			padding: 14px 18px;
+			border-radius: 6px;
+			border: 1px solid #e2e8f0;
+			margin-bottom: 25px;
+			flex-wrap: wrap;
+			gap: 10px;
+		}
+		.student-profile-badge {
+			font-size: 14px;
+			color: #1e293b;
+			display: flex;
+			align-items: center;
+			gap: 8px;
+		}
+		.header-action-buttons {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+		}
+		.change-pass-btn {
+			background: #1e73be;
+			border: 1px solid #1e73be;
+			color: #ffffff;
+			padding: 6px 14px;
+			font-size: 12px;
+			font-weight: 700;
+			border-radius: 4px;
+			cursor: pointer;
+		}
+		.logout-btn {
+			background: #e2e8f0;
+			border: 1px solid #cbd5e1;
+			color: #334155;
+			padding: 6px 14px;
+			font-size: 12px;
+			font-weight: 700;
+			border-radius: 4px;
+			cursor: pointer;
+		}
+		.logout-btn:hover {
+			background: #ba0417;
+			color: #ffffff;
+			border-color: #ba0417;
+		}
+
+		/* Metrics Grid */
+		.analytics-metrics-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+			gap: 15px;
+			margin-bottom: 25px;
+		}
+		.metric-box {
+			background: #ffffff;
+			border: 1px solid #edf2f7;
+			border-left: 4px solid #1e73be;
+			border-radius: 6px;
+			padding: 16px;
+			box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+		}
+		.metric-box.accent-red { border-left-color: #ba0417; }
+		.metric-box.accent-green { border-left-color: #2e7d32; }
+		.metric-box.accent-yellow { border-left-color: #f2b930; }
+		.metric-box span {
+			font-size: 11px;
+			text-transform: uppercase;
+			font-weight: 700;
+			color: #888;
+		}
+		.metric-box h2 {
+			margin: 6px 0 2px 0;
+			font-size: 24px;
+			color: #222;
+		}
+		.metric-box small { font-size: 11px; color: #666; }
+
+		/* Subject & Diagnostic Columns */
+		.subject-mastery-container {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 25px;
+			margin-bottom: 20px;
+		}
+		@media (max-width: 768px) {
+			.subject-mastery-container { grid-template-columns: 1fr; }
+		}
+		.subject-card-box {
+			background: #ffffff;
+			border: 1px solid #eef2f6;
+			border-radius: 6px;
+			padding: 20px;
+		}
+		.subject-card-box h4 {
+			margin: 0 0 15px 0;
+			font-size: 15px;
+			color: #333;
+			display: flex;
+			align-items: center;
+			gap: 8px;
+		}
+		.progress-item { margin-bottom: 12px; }
+		.progress-labels {
+			display: flex;
+			justify-content: space-between;
+			font-size: 12px;
+			font-weight: 600;
+			margin-bottom: 4px;
+			color: #444;
+		}
+		.progress-bar-bg {
+			width: 100%;
+			height: 8px;
+			background: #eceff1;
+			border-radius: 4px;
+			overflow: hidden;
+		}
+		.progress-bar-fill {
+			height: 100%;
+			border-radius: 4px;
+			transition: width 0.4s ease;
+		}
+		.ai-diagnosis-card {
+			background: #f8fafc;
+			border: 1px dashed #6c98e1;
+			border-radius: 6px;
+			padding: 16px;
+		}
+		.ai-diagnosis-card h5 {
+			margin: 0 0 8px 0;
+			font-size: 13px;
+			color: #1e3c72;
+			display: flex;
+			align-items: center;
+			gap: 6px;
+		}
+		.ai-diagnosis-card p {
+			font-size: 12.5px;
+			color: #555;
+			margin: 0 0 10px 0;
+			line-height: 1.4;
+		}
+
+		/* Password Modal */
+		#change-password-modal {
+			display: none;
+			position: fixed;
+			top: 0; left: 0;
+			width: 100vw; height: 100vh;
+			background: rgba(0, 0, 0, 0.5);
+			z-index: 100000;
+			align-items: center;
+			justify-content: center;
+		}
+		.password-modal-content {
+			background: #ffffff;
+			border-radius: 8px;
+			width: 90%;
+			max-width: 380px;
+			padding: 25px;
+			box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+			position: relative;
+		}
+		.modal-close-btn {
+			position: absolute;
+			top: 15px; right: 15px;
+			background: transparent; border: none;
+			font-size: 20px; cursor: pointer; color: #94a3b8;
+		}
+		.modal-save-btn {
+			width: 100%; padding: 10px;
+			background: #1e73be; color: #ffffff;
+			border: none; border-radius: 5px;
+			font-weight: 700; font-size: 13px; cursor: pointer;
+		}
+
+		/* Floating Tutor */
+		#akshaya-ai-tutor-bubble {
+			position: fixed; bottom: 25px; right: 25px;
+			width: 55px; height: 55px; border-radius: 50%;
+			background: linear-gradient(135deg, #1e3c72 0%, #ba0417 100%);
+			color: #ffffff; display: flex; align-items: center; justify-content: center;
+			font-size: 24px; box-shadow: 0 8px 25px rgba(0,0,0,0.25); cursor: pointer;
+			z-index: 99999;
+		}
+		#akshaya-ai-tutor-modal {
+			display: none; position: fixed; bottom: 90px; right: 25px;
+			width: 360px; max-width: calc(100vw - 30px); height: 500px;
+			background: #ffffff; border-radius: 10px;
+			box-shadow: 0 10px 35px rgba(0,0,0,0.2);
+			border: 1px solid #e0e0e0; flex-direction: column;
+			overflow: hidden; z-index: 99999;
+		}
+		.ai-modal-header {
+			background: #1e3c72; color: #ffffff; padding: 12px 16px;
+			display: flex; justify-content: space-between; align-items: center;
+		}
+		.ai-chat-messages {
+			flex: 1; padding: 15px; overflow-y: auto; display: flex;
+			flex-direction: column; gap: 10px; background: #f9fbfd;
+		}
+		.ai-message {
+			padding: 8px 12px; border-radius: 8px; font-size: 12px;
+			line-height: 1.4; max-width: 90%;
+		}
+		.ai-message.bot { background: #ffffff; border: 1px solid #e2e8f0; align-self: flex-start; }
+		.ai-message.user { background: #1e73be; color: #ffffff; align-self: flex-end; }
+		.ai-input-bar { display: flex; padding: 10px; border-top: 1px solid #e0e0e0; }
+		.ai-input-bar input {
+			flex: 1; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 20px;
+			font-size: 12px; outline: none; font-family: 'Montserrat', sans-serif;
+		}
+		.ai-input-bar button {
+			background: #ba0417; color: #ffffff; border: none; width: 32px; height: 32px;
+			border-radius: 50%; margin-left: 6px; cursor: pointer;
+		}
+
+		/* Math Box */
+		.math-box {
+			background: #f0f4f8; border-left: 3px solid #1e73be; padding: 6px 10px;
+			margin: 6px 0; font-family: 'Times New Roman', serif; font-size: 14px;
+		}
+		.math-fraction { display: inline-flex; flex-direction: column; vertical-align: middle; text-align: center; padding: 0 4px; }
+		.math-numerator { border-bottom: 1.5px solid #333; }
+	</style>
+</head>
+<body>
+
+	<!-- Header -->
+	<header>
+		<div class="nav-container">
+			<a href="index.html">
+				<img src="https://akshayaedu.com/wp-content/uploads/2018/01/logovector.png" alt="logo" style="max-height: 45px;">
+			</a>
+			<a href="index.html" class="portal-back-btn"><i class="fa fa-arrow-left"></i> Return to Main Website</a>
+		</div>
+	</header>
+
+	<div class="portal-wrapper">
+		<div class="portal-card-main">
+			
+			<div class="portal-title-strip">
+				<h2><i class="fa-solid fa-brain" style="color: #ba0417;"></i> AI Student Performance Analyzer</h2>
+				<span style="font-size: 12px; color: #2e7d32; font-weight: 700;"><i class="fa fa-circle" style="font-size: 8px;"></i> Live Diagnostic Engine</span>
+			</div>
+
+			<!-- 1. LOGIN GATE -->
+			<div id="auth-gate-wrapper" class="student-auth-gate">
+				<h4>Candidate Sign In</h4>
+				<p>Enter your Student ID and Password to view your personal performance and diagnostic feedback.</p>
+				
+				<form onsubmit="handleStudentLogin(event)">
+					<div class="auth-input-group">
+						<label for="student-login-id">Student Login ID</label>
+						<input type="text" id="student-login-id" placeholder="e.g. aravind2026" required autocomplete="username">
+					</div>
+					<div class="auth-input-group">
+						<label for="student-login-pass">Password</label>
+						<input type="password" id="student-login-pass" placeholder="••••••••" required autocomplete="current-password">
+					</div>
+					<button type="submit" class="auth-login-btn"><i class="fa fa-right-to-bracket"></i> Sign In to My Dashboard</button>
+				</form>
+
+				<div id="login-error-box" class="auth-error-msg">
+					<i class="fa fa-circle-exclamation"></i> Invalid Login ID or Password.
+				</div>
+
+				<div class="auth-hint-box">
+					<strong>Dedicated Demo Credentials:</strong><br>
+					• ID: <code>aravind2026</code> &nbsp;|&nbsp; Pass: <code>pass123</code> (Class 12 JEE)<br>
+					• ID: <code>ananya2026</code> &nbsp;|&nbsp; Pass: <code>pass123</code> (Class 11 NEET)<br>
+					• ID: <code>rohan2026</code> &nbsp;&nbsp;|&nbsp; Pass: <code>pass123</code> (Class 10 CBSE)
+				</div>
+			</div>
+
+			<!-- 2. ISOLATED CANDIDATE DASHBOARD -->
+			<div id="student-report-view" style="display: none;">
+				
+				<div class="student-logged-in-bar">
+					<div class="student-profile-badge">
+						<i class="fa fa-circle-user" style="font-size: 20px; color: #1e73be;"></i>
+						<span>Candidate: <strong id="student-display-name">--</strong> (<span id="student-display-track">--</span>)</span>
+					</div>
+					<div class="header-action-buttons">
+						<button class="change-pass-btn" onclick="openPasswordModal()"><i class="fa fa-key"></i> Update Password</button>
+						<button class="logout-btn" onclick="handleStudentLogout()"><i class="fa fa-arrow-right-from-bracket"></i> Sign Out</button>
+					</div>
+				</div>
+
+				<!-- Metrics -->
+				<div class="analytics-metrics-grid">
+					<div class="metric-box accent-green">
+						<span>My Accuracy Rate</span>
+						<h2 id="metric-accuracy">--</h2>
+						<small><i class="fa fa-arrow-up" style="color: green;"></i> Mock Diagnostic</small>
+					</div>
+					<div class="metric-box">
+						<span>Recent Mock Score</span>
+						<h2 id="metric-score">--</h2>
+						<small>Top Percentile Standing</small>
+					</div>
+					<div class="metric-box accent-yellow">
+						<span>Avg Problem Speed</span>
+						<h2 id="metric-speed">--</h2>
+						<small>Target: &lt; 1.5 min per MCQ</small>
+					</div>
+					<div class="metric-box accent-red">
+						<span>Focus Weak Topics</span>
+						<h2 id="metric-weak-count">--</h2>
+						<small style="color: #ba0417;">AI Remedial Set Ready</small>
+					</div>
+				</div>
+
+				<!-- Subject Mastery & AI Guidance -->
+				<div class="subject-mastery-container">
+					<div class="subject-card-box">
+						<h4><i class="fa fa-chart-line" style="color: #1e73be;"></i> Subject Concept Mastery</h4>
+						
+						<div class="progress-item">
+							<div class="progress-labels">
+								<span id="subj1-name">Subject 1</span>
+								<span id="subj1-val">0%</span>
+							</div>
+							<div class="progress-bar-bg"><div class="progress-bar-fill" id="subj1-bar" style="width: 0%;"></div></div>
+						</div>
+
+						<div class="progress-item">
+							<div class="progress-labels">
+								<span id="subj2-name">Subject 2</span>
+								<span id="subj2-val">0%</span>
+							</div>
+							<div class="progress-bar-bg"><div class="progress-bar-fill" id="subj2-bar" style="width: 0%;"></div></div>
+						</div>
+
+						<div class="progress-item">
+							<div class="progress-labels">
+								<span id="subj3-name">Subject 3</span>
+								<span id="subj3-val">0%</span>
+							</div>
+							<div class="progress-bar-bg"><div class="progress-bar-fill" id="subj3-bar" style="width: 0%;"></div></div>
+						</div>
+
+						<div class="progress-item">
+							<div class="progress-labels">
+								<span id="subj4-name">Subject 4</span>
+								<span id="subj4-val">0%</span>
+							</div>
+							<div class="progress-bar-bg"><div class="progress-bar-fill" id="subj4-bar" style="width: 0%;"></div></div>
+						</div>
+					</div>
+
+					<div class="subject-card-box">
+						<h4><i class="fa fa-robot" style="color: #ba0417;"></i> AI Diagnostic Guidance</h4>
+						
+						<div class="ai-diagnosis-card">
+							<h5><i class="fa fa-triangle-exclamation" style="color: #e65100;"></i> Detected Weak Points</h5>
+							<p id="ai-detected-text">--</p>
+						</div>
+
+						<div class="ai-diagnosis-card" style="margin-top: 10px; border-color: #2e7d32; background: #f6fdf8;">
+							<h5><i class="fa fa-lightbulb" style="color: #2e7d32;"></i> My Remedial Action Plan</h5>
+							<p id="ai-action-text">--</p>
+							<button style="padding: 6px 14px; background: #f2b930; border: none; border-radius: 4px; font-weight: 700; cursor: pointer; font-size: 12px;" onclick="triggerAIDoubtHelper('Help me practice my weak topics')"><i class="fa fa-play"></i> Start Practice Session</button>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<!-- PASSWORD MODAL -->
+	<div id="change-password-modal">
+		<div class="password-modal-content">
+			<button class="modal-close-btn" onclick="closePasswordModal()">&times;</button>
+			<h4 style="margin-bottom: 8px; color: #1e3c72;"><i class="fa fa-key"></i> Update Password</h4>
+			<p style="font-size: 12px; color: #64748b; margin-bottom: 15px;">Set a new password for your candidate login.</p>
+			
+			<form onsubmit="handlePasswordUpdate(event)">
+				<div class="auth-input-group">
+					<label>Current Password</label>
+					<input type="password" id="current-pass-input" required>
+				</div>
+				<div class="auth-input-group">
+					<label>New Password</label>
+					<input type="password" id="new-pass-input" required minlength="4">
+				</div>
+				<div class="auth-input-group">
+					<label>Confirm New Password</label>
+					<input type="password" id="confirm-pass-input" required>
+				</div>
+				<button type="submit" class="modal-save-btn">Save New Password</button>
+			</form>
+			<div id="password-status-box" style="display:none; font-size: 12px; font-weight: 600; margin-top: 10px; text-align: center;"></div>
+		</div>
+	</div>
+
+	<!-- FLOATING AI ASSISTANT -->
+	<div id="akshaya-ai-tutor-bubble" onclick="toggleAIChat()" title="Ask AI Doubt Assistant">
+		<i class="fa fa-robot"></i>
+	</div>
+
+	<div id="akshaya-ai-tutor-modal">
+		<div class="ai-modal-header">
+			<h4 style="font-size: 13px;"><i class="fa fa-brain"></i> Akshaya AI Study Assistant</h4>
+			<button onclick="toggleAIChat()" style="background:transparent; border:none; color:#fff; font-size:18px; cursor:pointer;">&times;</button>
+		</div>
+		<div class="ai-chat-messages" id="ai-chat-box">
+			<div class="ai-message bot">
+				Hello! I am your <strong>Akshaya AI Academic Helper</strong>. Need help with any difficult numerical, theorem, or formula? Type below!
+			</div>
+		</div>
+		<div class="ai-input-bar">
+			<input type="text" id="ai-user-query" placeholder="Type your doubt..." onkeypress="if(event.key==='Enter') submitAIQuestion()">
+			<button onclick="submitAIQuestion()"><i class="fa fa-paper-plane"></i></button>
+		</div>
+	</div>
+
+	<!-- PORTAL JAVASCRIPT -->
+	<script>
+		var defaultStudentDB = {
+			"aravind2026": {
+				password: "pass123",
+				name: "Aravind Kumar N",
+				track: "Class 12 / PU II - JEE & Board Track",
+				accuracy: "89.4%",
+				score: "570 / 600",
+				speed: "1.4 min",
+				weakCount: "2 Topics",
+				subjects: [
+					{ name: "Mathematics (Calculus & Vectors)", val: "95%", color: "#2e7d32" },
+					{ name: "Physics (Electrodynamics & Optics)", val: "88%", color: "#1e73be" },
+					{ name: "Chemistry (Organic & Physical)", val: "82%", color: "#f2b930" },
+					{ name: "Computer Science / Optional", val: "92%", color: "#7cc758" }
+				],
+				detectedText: "Student loses precision in <strong>Integration by Parts</strong> and <strong>Rotational Mechanics (Torque Equilibrium)</strong> under timed pressure.",
+				actionText: "Assigned <strong>15 targeted adaptive practice questions</strong> with step-by-step solutions for 1-on-1 doubt mentoring."
+			},
+			"ananya2026": {
+				password: "pass123",
+				name: "Ananya S",
+				track: "Class 11 / PU I - NEET & PCMB Track",
+				accuracy: "92.1%",
+				score: "582 / 600",
+				speed: "1.1 min",
+				weakCount: "1 Topic",
+				subjects: [
+					{ name: "Biology (Genetics & Ecology)", val: "96%", color: "#2e7d32" },
+					{ name: "Chemistry (Chemical Bonding)", val: "90%", color: "#1e73be" },
+					{ name: "Physics (Thermodynamics)", val: "79%", color: "#ba0417" },
+					{ name: "Mathematics / Foundation", val: "89%", color: "#7cc758" }
+				],
+				detectedText: "High retention in Biology, but slight difficulty with numerical calculations in <strong>Carnot Cycle & Thermodynamics</strong>.",
+				actionText: "Assigned <strong>Physics Formula Flashcards</strong> and interactive problem sets on Thermal Physics."
+			},
+			"rohan2026": {
+				password: "pass123",
+				name: "Rohan V",
+				track: "Class 10 - CBSE Board Track",
+				accuracy: "94.5%",
+				score: "485 / 500",
+				speed: "1.6 min",
+				weakCount: "0 Weak Areas",
+				subjects: [
+					{ name: "Class 10 Mathematics", val: "98%", color: "#2e7d32" },
+					{ name: "Science (Physics & Chemistry)", val: "92%", color: "#1e73be" },
+					{ name: "Science (Biology)", val: "94%", color: "#7cc758" },
+					{ name: "Social Studies & English", val: "91%", color: "#1e73be" }
+				],
+				detectedText: "Consistent performance across CBSE Board mock patterns with high precision in Quadratic Equations and Triangle Proofs.",
+				actionText: "Upgraded to <strong>JEE/NEET Level-0 Foundation Modules</strong> to develop early competitive problem-solving habits."
+			}
+		};
+
+		var activeLoggedInUserId = null;
+
+		function getDatabase() {
+			var stored = localStorage.getItem("akshaya_student_db");
+			if (!stored) {
+				localStorage.setItem("akshaya_student_db", JSON.stringify(defaultStudentDB));
+				return defaultStudentDB;
+			}
+			return JSON.parse(stored);
+		}
+
+		function saveDatabase(db) {
+			localStorage.setItem("akshaya_student_db", JSON.stringify(db));
+		}
+
+		function handleStudentLogin(event) {
+			event.preventDefault();
+			var userId = document.getElementById("student-login-id").value.trim().toLowerCase();
+			var userPass = document.getElementById("student-login-pass").value.trim();
+			var errBox = document.getElementById("login-error-box");
+			var db = getDatabase();
+
+			if (db[userId] && db[userId].password === userPass) {
+				errBox.style.display = "none";
+				activeLoggedInUserId = userId;
+				loadStudentData(db[userId]);
+				document.getElementById("auth-gate-wrapper").style.display = "none";
+				document.getElementById("student-report-view").style.display = "block";
+				document.getElementById("student-login-pass").value = "";
+			} else {
+				errBox.style.display = "block";
+			}
+		}
+
+		function handleStudentLogout() {
+			activeLoggedInUserId = null;
+			document.getElementById("student-report-view").style.display = "none";
+			document.getElementById("auth-gate-wrapper").style.display = "block";
+			document.getElementById("student-login-id").value = "";
+			document.getElementById("student-login-pass").value = "";
+		}
+
+		function loadStudentData(data) {
+			document.getElementById("student-display-name").innerText = data.name;
+			document.getElementById("student-display-track").innerText = data.track;
+			document.getElementById("metric-accuracy").innerText = data.accuracy;
+			document.getElementById("metric-score").innerText = data.score;
+			document.getElementById("metric-speed").innerText = data.speed;
+			document.getElementById("metric-weak-count").innerText = data.weakCount;
+
+			for (var i = 0; i < data.subjects.length; i++) {
+				var idx = i + 1;
+				document.getElementById("subj" + idx + "-name").innerText = data.subjects[i].name;
+				document.getElementById("subj" + idx + "-val").innerText = data.subjects[i].val;
+				var bar = document.getElementById("subj" + idx + "-bar");
+				bar.style.width = data.subjects[i].val;
+				bar.style.backgroundColor = data.subjects[i].color;
+			}
+
+			document.getElementById("ai-detected-text").innerHTML = data.detectedText;
+			document.getElementById("ai-action-text").innerHTML = data.actionText;
+		}
+
+		function openPasswordModal() {
+			document.getElementById("change-password-modal").style.display = "flex";
+			document.getElementById("current-pass-input").value = "";
+			document.getElementById("new-pass-input").value = "";
+			document.getElementById("confirm-pass-input").value = "";
+			document.getElementById("password-status-box").style.display = "none";
+		}
+
+		function closePasswordModal() {
+			document.getElementById("change-password-modal").style.display = "none";
+		}
+
+		function handlePasswordUpdate(event) {
+			event.preventDefault();
+			var currentPass = document.getElementById("current-pass-input").value.trim();
+			var newPass = document.getElementById("new-pass-input").value.trim();
+			var confirmPass = document.getElementById("confirm-pass-input").value.trim();
+			var status = document.getElementById("password-status-box");
+			var db = getDatabase();
+
+			if (!activeLoggedInUserId || !db[activeLoggedInUserId]) {
+				status.style.display = "block";
+				status.style.color = "#dc2626";
+				status.innerText = "Session expired. Please log in again.";
+				return;
+			}
+
+			if (db[activeLoggedInUserId].password !== currentPass) {
+				status.style.display = "block";
+				status.style.color = "#dc2626";
+				status.innerText = "Incorrect current password.";
+				return;
+			}
+
+			if (newPass !== confirmPass) {
+				status.style.display = "block";
+				status.style.color = "#dc2626";
+				status.innerText = "New passwords do not match.";
+				return;
+			}
+
+			db[activeLoggedInUserId].password = newPass;
+			saveDatabase(db);
+
+			status.style.display = "block";
+			status.style.color = "#16a34a";
+			status.innerHTML = "<i class='fa fa-circle-check'></i> Password updated successfully!";
+
+			setTimeout(closePasswordModal, 1500);
+		}
+
+		function toggleAIChat() {
+			var modal = document.getElementById("akshaya-ai-tutor-modal");
+			modal.style.display = (modal.style.display === "flex") ? "none" : "flex";
+		}
+
+		function submitAIQuestion() {
+			var input = document.getElementById("ai-user-query");
+			var text = input.value.trim();
+			if (!text) return;
+
+			appendMessage(text, "user");
+			input.value = "";
+
+			setTimeout(function() {
+				var answer = generateAIResponse(text);
+				appendMessage(answer, "bot");
+			}, 500);
+		}
+
+		function triggerAIDoubtHelper(preset) {
+			var modal = document.getElementById("akshaya-ai-tutor-modal");
+			modal.style.display = "flex";
+			appendMessage(preset, "user");
+			setTimeout(function() {
+				appendMessage(generateAIResponse(preset), "bot");
+			}, 400);
+		}
+
+		function appendMessage(text, sender) {
+			var box = document.getElementById("ai-chat-box");
+			var msgDiv = document.createElement("div");
+			msgDiv.className = "ai-message " + sender;
+			msgDiv.innerHTML = text;
+			box.appendChild(msgDiv);
+			box.scrollTop = box.scrollHeight;
+		}
+
+		function generateAIResponse(query) {
+			var q = query.toLowerCase();
+			if (q.includes("integration") || q.includes("parts")) {
+				return "<strong>Integration by Parts Rule (ILATE):</strong><div class='math-box'>&int; <em>u &middot; v</em> dx = <em>u</em> &int; <em>v</em> dx &minus; &int; [ <em>u'</em> &int; <em>v</em> dx ] dx</div>Order: <strong>I</strong>nverse, <strong>L</strong>og, <strong>A</strong>lgebraic, <strong>T</strong>rigonometric, <strong>E</strong>xponential.";
+			} else if (q.includes("quadratic")) {
+				return "<strong>Quadratic Roots Formula:</strong><div class='math-box'><em>x</em> = <span class='math-fraction'><span class='math-numerator'>&minus;<em>b</em> &plusmn; &radic;(<em>b</em><sup>2</sup> &minus; 4<em>ac</em>)</span><span>2<em>a</em></span></span></div>";
+			} else {
+				return "I have logged your question: '<em>" + query + "</em>'. An automated solution breakdown is queued for your review!";
+			}
+		}
+	</script>
+</body>
+</html>
